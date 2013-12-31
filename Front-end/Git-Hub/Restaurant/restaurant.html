@@ -1,0 +1,62 @@
+<head>
+  <title>Restaurant Reservations</title>
+</head>
+<body>
+
+<button id="claim">Claim a Reservations</button>
+<button id="reserve">Make a Reservations</button>
+<div id="reservations">Reservations:</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+var reservations = {
+  'Billy': { claimed: false }
+};
+
+var claimReservation = function(name) {
+
+        if (reservations[name] === undefined) {
+                alert("Sorry that reservation doesn't exist");
+        }
+        else if (reservations[name].claimed === false) {
+                alert('Welcome');
+                reservations[name].claimed = true;
+                $('#' + name).remove();
+        }        
+        else {
+                alert('Sorry that reservation has been taken');
+        }
+};
+
+var makeReservation = function(name) {
+
+        if (reservations[name] === undefined || (reservations[name].claimed === true)) {
+                alert("I have set your reservation");
+                reservations[name] = {claimed: false};
+                $('#reservations').append('<div id="' + name + '">' + name + '</div>');
+
+        }
+        else if  (reservations[name].claimed === false) {
+                alert('You already have a reservation');
+        }
+        else {
+                alert('Sorry that reservation is not available');
+        }
+};
+
+
+$('#claim').on('click', function (e) {
+  name = prompt("What is your name?");
+  claimReservation(name);
+});
+
+$('#reserve').on('click', function (e) {
+  var name = prompt("What name should we reserve under?");
+  makeReservation(name);
+});
+
+
+</script>
+</body>
+</html>
